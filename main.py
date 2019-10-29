@@ -2,29 +2,9 @@ import sys
 import cv2
 import numpy as np
 import random
-
-def compute_centroids(X, idx, k):
-    pixels, n = X.shape
-    centroids = np.zeros((k,n))
-    
-
-def find_closest_centroids(X, centroids):
-    pixels = X.shape[0]
-    k = centroids.shape[0]
-    idx = np.zeros(pixels)
-
-    for i in range(pixels):
-        closest_centroid = 0
-        #euclidean distance
-        min_d = np.linalg.norm(X[i] - centroids[0])
-        for j in range(k):
-            d = np.linalg.norm(X[i] - centroids[j])
-            if d < min_d:
-                min_d = d
-                closest_centroid = j
-        idx[i] = closest_centroid
-    return idx
-
+import matplotlib.pyplot as plt
+from PIL import Image
+from centroids import  compute_centroids, init_centroids, find_closest_centroids
 
 
 def run_k_means(X, initial_centroids, iters):
@@ -37,28 +17,17 @@ def run_k_means(X, initial_centroids, iters):
         idx = find_closest_centroids(X, centroids)
         centroids = compute_centroids(X, idx, k)
 
-    return idx, centroid
-
-def init_centroids(X, k):
-    pixels, n = X.shape
-    centroids = np.zeros((k, n))
-    used_c = []
-    for i in range(k):
-        c = random.randint(0, pixels - 1)
-        while c in used_c:
-            c = random.randint(0, pixels -1)
-        used_c.append(c)
-        centroids[i]  = X[c]
-    return centroids
+    return idx, centroids
 
 def compress_image(img, nb_colors):
     # Values are stocked line by line, in order to use clustering we'll stock them together, and reform them at the end
     X = np.reshape(img, (img.shape[0] * img.shape[1], img.shape[2]))
-    print(X.shape)
     initial_centroids = init_centroids(X, nb_colors)
-    print(initial_centroids)
-    idx, centroids = run_k_means(X, initial_centroids, 10)
-    return (X)
+    idx, centroids = run_k_means(X, initial_centroids, 5)
+    idx = idx.astype(int)
+    for i in range(X.shape[0]):
+        X[i] = centroids[idx[i]]
+    return X
 
 def usage():
     print("Usage :\npython main.py [image_file] [number_of_colors](optional, 16 by default)")
@@ -78,7 +47,17 @@ def main():
         nb_colors = 16
     #normalization of data
     img = img / 255 
-    compress_image(img, nb_colors)
+    X = compress_image(img, nb_colors)
+    X_final =  np.reshape(X, (img.shape[0], img.shape[1], img.shape[2]))
+    #X_final = np.delete(X_final, np.arange(0, X_final.size, nb_colors))
+    # DELETE NTH PIXEL EVEYR LINE
+    print(X_final.shape)
+    print(X_final)
+    plt.imshow(X_final)
+    plt.show()
+    im = Image.fromarray((X_final * 255).astype(np.uint8))
+    im.save("test.jpeg")
 
 if __name__ == '__main__':
+    np.seterr(divide='ignore', invalid='ignore')
     main()

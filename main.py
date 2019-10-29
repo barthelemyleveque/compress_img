@@ -3,6 +3,11 @@ import cv2
 import numpy as np
 import random
 
+def compute_centroids(X, idx, k):
+    pixels, n = X.shape
+    centroids = np.zeros((k,n))
+    
+
 def find_closest_centroids(X, centroids):
     pixels = X.shape[0]
     k = centroids.shape[0]
@@ -10,11 +15,15 @@ def find_closest_centroids(X, centroids):
 
     for i in range(pixels):
         closest_centroid = 0
-        min_d = (X[i] - centroids[0])
-        print(min_d)
+        #euclidean distance
         min_d = np.linalg.norm(X[i] - centroids[0])
-        print(min_d)
-    return 1
+        for j in range(k):
+            d = np.linalg.norm(X[i] - centroids[j])
+            if d < min_d:
+                min_d = d
+                closest_centroid = j
+        idx[i] = closest_centroid
+    return idx
 
 
 

@@ -26,4 +26,4 @@ python main.py small_parrot.jpg
 >>> ---  The image was compressed in 36 seconds and saved as small_parrot_16.jpeg. ---
 ```
 
-![compressed_parrot]](https://i.ibb.co/41D0gJ7/small-parrot-16.jpg)
+![compressed_parrot](https://i.ibb.co/41D0gJ7/small-parrot-16.jpg)

@@ -14,10 +14,14 @@ pip install opencv-python pandas numpy pillow opencv-python
 Then you need an image, and think about the number of colors you want after compression ! This algorithm has a time-complexity of O(n<sup>2</sup>) so the bigger the image and the number of colors, the longer it will take for your computer to execute it.
 
 ```
-python main.py [image_file] [number_of_colors](optional, 32 by default)
+python main.py [image_file] [number_of_colors](optional, 16 by default)
 ```
 
 For example, with the following image : 
 
+![parrots](https://static-s.aa-cdn.net/img/amazon/30600000330954/209ed6d6c356355792dfd9595c627ec9?v=1)
 
-![parrots](https://us.123rf.com/450wm/psstockfoto/psstockfoto1609/psstockfoto160900047/65964562-loro-de-sun-conure-loro-o-amarillo-que-cuelga-en-la-ramificaci%C3%B3n.jpg?ver=6)
+```
+python main.py parrot.png
+>>> 
+```

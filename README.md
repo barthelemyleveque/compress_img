@@ -19,9 +19,11 @@ python main.py [image_file] [number_of_colors](optional, 16 by default)
 
 For example, with the following image : 
 
-![parrots](https://static-s.aa-cdn.net/img/amazon/30600000330954/209ed6d6c356355792dfd9595c627ec9?v=1)
+![parrots](https://static.greatbigcanvas.com/images/square/national-geographic/blue-headed-parrot-amazon-peru,1168766.jpg?max=128)
 
 ```
-python main.py parrot.png
->>> 
+python main.py small_parrot.jpg
+>>> ---  The image was compressed in 36 seconds and saved as small_parrot_16.jpeg. ---
 ```
+
+![compressed_parrot]](https://i.ibb.co/41D0gJ7/small-parrot-16.jpg)
